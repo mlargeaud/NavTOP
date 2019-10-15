@@ -1,0 +1,46 @@
+CASE 1 INPUT FILE
+Status : checked, ready for use
+Source : "Space flight dynamics", Kluever, C., A., Wiley, 2018, p.60
+
+Case name                                                     Molniya_grav_only
+
+SPACECRAFT PROPERTIES
+————————————————————————————————————————————————————————————————————————————————
+
+Main gravitating body                                         earth
+
+Spacecraft mass (kg)                                          83.6
+
+Spacecraft reflective area (m2)                               0.528415884333803
+
+Spacecraft reflective coefficient                             1.7
+
+
+INITIAL CONDITIONS
+————————————————————————————————————————————————————————————————————————————————
+
+Main body's initial orientation
+
+Right ascension (deg)                                         0
+Declination (deg)                                             0
+Sidereal time (deg)                                           0
+
+Main body's initial true anomaly (deg)                        0
+
+Spacecraft's initial orbital elements
+
+Inclination (deg)                                             63.4
+Longitude of ascending node (deg)                             50
+Argument of periapsis (deg)                                   280
+True anomaly (deg)                                            180
+Semi-major axis (m)                                           26600000
+Eccentricity                                                  0.74
+
+
+PROPAGATION PARAMETERS
+————————————————————————————————————————————————————————————————————————————————
+
+Potential maximum degree                                      16
+
+Time step (sec)                                               10
+Final time increment (sec)                                    86400

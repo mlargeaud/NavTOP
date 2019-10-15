@@ -1,0 +1,50 @@
+EARTH PHYSICAL PARAMETERS
+————————————————————————————————————————————————————————————————————————————————
+
+Gravitational parameter (m3/s2) 															3.98601e14
+
+Mean radius (m) 																							6371000
+
+Unit rotation vector components expressed in Body Fixed frame (rad/s) [1]
+
+omega1																										  	2.02558749404254e-09
+omega2																												-1.51919062338039e-13
+omega3																												7.29211499718669e-05
+
+Principal moments of inertia (kg/m2) [2]
+I1																														8.01008500000000e37
+I2																														8.01026200000000e37
+I3																														8.03648300000000e37
+
+Rotation matrix from Principal Axes to Body Fixed frame [2]
+
+PA2BF11 																											0.966248057078409
+PA2BF12																												0.257613454989251
+PA2BF13																												3.22379556013547e-07
+PA2BF21																												-0.257613454989501
+PA2BF22																												0.966248057077472
+PA2BF23																												-1.72595172923395e-06
+PA2BF31																												7.55902099197723e-07
+PA2BF32																												1.58475896078709e-06
+PA2BF33																												0.999999999998459
+
+
+EARTH MEAN ORBITAL ELEMENTS (J2000) [3]
+————————————————————————————————————————————————————————————————————————————————
+
+Orbital inclination (deg)            													0.00005
+Longitude of ascending node (deg)  														-11.26064
+Longitude of perihelion (deg)      														102.94719
+Semi-major axis (m)                														149.60e9
+Orbital eccentricity                 													0.01671022
+
+
+Sources :
+
+	[1] http://hpiers.obspm.fr/eop-pc/earthor/polmot/pm.html
+
+	[2] Chengjun Liu, Chengli Huang, Mian Zhang, The principal moments of inertia
+			calculated with the hydrostatic equilibrium figure of the Earth,
+			Geodesy and Geodynamics 8 (2017) 201-205
+
+	[3]	https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html

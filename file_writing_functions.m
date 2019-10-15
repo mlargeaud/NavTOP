@@ -1,0 +1,63 @@
+% WRITE IN FILE FUNCTION CLASS
+classdef file_writing_functions
+    
+    methods(Static)
+        
+        % WRITE PROPAGATION RESULTS IN FILE 
+        %
+        % Inputs : 
+        %   case_name (string) - case name given by user
+        %
+        %   prop_res - matrix containing the values taken by the spacrecraft's 
+        %                   properties at each instant during propagation. 
+        %                   Each row corresponds to a particular instant :
+        %                   tab(:, 1) -> time increment
+        %                   tab(:, 2) -> planet-centric radius
+        %                   tab(:, 3) -> latitude
+        %                   tab(:, 4) -> longitude
+        %                   tab(:, 5) -> main body's right ascension
+        %                   tab(:, 6) -> main body's declination
+        %                   tab(:, 7) -> main body's sidereal time
+        %                   tab(:, 8:10) -> gravitational perturbation
+        %                   tab(:, 11:13) -> sol. rad. pressure 
+        %                   tab(:, 14:16) -> third body gravity
+        %                   tab(:, 17) -> inside/outside umbra index
+        %                   tab(:, 18:23) -> orbital elements
+        %                   tab(:, 24) -> RK4 computation error on orb. elems
+        function PropData2File(case_name, prop_res)
+            
+            fileID = fopen(strcat('prop_data_', case_name, '.txt'), 'w');
+            
+            fprintf(fileID, '%-15s \n', strcat(case_name, ...
+                ' NavTOP PROPAGATION RESULTS'));
+            
+            fprintf(fileID, '%-150s \n', ' ');
+            
+            fprintf(fileID, ...
+                '%-22s \t \t %-22s \t \t %-22s \t \t %-22s \t \t %-22s \t \t %-22s \t \t %-22s \t \t %-22s \t \t %-22s \t \t %-22s \t \t %-22s \t \t %-22s \t \t %-22s \t \t %-22s \t \t %-22s \t \t %-22s \t \t %-22s \t \t %-22s \t \t %-22s \t \t %-22s \t \t %-22s \t \t %-22s \t \t %-22s \t \t %-22s \t \t\n', ...
+                'Time (s)', 'Rad (m)', 'Lat (rad)', ...
+                'Lon (rad)', 'RA (rad)', 'Dec (rad)', ...
+                'STime (rad)', 'Fg1 (m/s2)', 'Fg2 (m/s2)', ...
+                'Fg3 (m/s2)', 'Fsrp1 (m/s2)', 'Fsrp2 (m/s2)', ...
+                'Fsrp3 (m/s2)', 'Ftbg1 (m/s2)', ...
+                'Ftbg2 (m/s2)', 'Ftbg3 (m/s2)', 'UIndex', ...
+                'Inc (rad)', 'AscNode (rad)', 'ArgPer (rad)', ...
+                'TrAnom (rad)', 'SMajAxis (m)', 'Ecc', 'Err');
+            fprintf(fileID, ...
+                '%-22s \t \t %-22s \t \t %-22s \t \t %-22s \t \t %-22s \t \t %-22s \t \t %-22s \t \t %-22s \t \t %-22s \t \t %-22s \t \t %-22s \t \t %-22s \t \t %-22s \t \t %-22s \t \t %-22s \t \t %-22s \t \t %-22s \t \t %-22s \t \t %-22s \t \t %-22s \t \t %-22s \t \t %-22s \t \t %-22s \t \t %-22s \t \t\n', ...
+                '----------------------', '----------------------', '----------------------', ...
+                '----------------------', '----------------------', '----------------------', ...
+                '----------------------', '----------------------', '----------------------', ...
+                '----------------------', '----------------------', '----------------------', ...
+                '----------------------', '----------------------', '----------------------', ...
+                '----------------------', '----------------------', '----------------------', ...
+                '----------------------', '----------------------', '----------------------', ...
+                '----------------------', '----------------------', '----------------------');
+            fprintf(fileID, '%+.15e \t \t %+.15e \t \t %+.15e \t \t %+.15e \t \t %+.15e \t \t %+.15e \t \t %+.15e \t \t %+.15e \t \t %+.15e \t \t %+.15e \t \t %+.15e \t \t %+.15e \t \t %+.15e \t \t %+.15e \t \t %+.15e \t \t %+.15e \t \t %+.15e \t \t %+.15e \t \t %+.15e \t \t %+.15e \t \t %+.15e \t \t %+.15e \t \t %+.15e \t \t %+.15e\n', prop_res');
+            fclose(fileID);
+                     
+        end 
+        
+    end
+    
+end
