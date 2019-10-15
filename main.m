@@ -1,5 +1,4 @@
 % MAIN SCRIPT 
-% Modification test
 clear all; %#ok<CLALL>
 
 addpath('/Users/maxime/Documents/ORBs project/Dynamic model/v122/cprintf');
