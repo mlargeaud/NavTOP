@@ -16,7 +16,7 @@ INPUT FILES:
  
 The parameters needed to run the code must be indicated in an input file. Examples of such files can be found in the            'input_files' folder. 
  
-The 3 first lines give a description of the case studied, the file's readiness status ("parameters need checking" or "ready    for use", for example) and the source of the parameters used. This part of the file can be modified as the user wants, provided it remains above the "case_name" section. The entry parameters are then defined as follows:
+The 3 first lines give a description of the case studied, the file's readiness status ('parameters need checking' or 'ready    for use', for example) and the source of the parameters used. This part of the file can be modified as the user wants, provided it remains above the "case_name" section. The entry parameters are then defined as follows:
 
   - Case name: string paramater referring to the scenario's name the user wants to define
   
@@ -55,9 +55,9 @@ The values associated with each parameter are given on the same corresponding li
 HOW TO USE THE CODE:
  
   - Create or edit an input file.  
-  - Open the script called "main" in MATLAB, and run the entire script.
+  - Open the script called 'main' in MATLAB, and run the entire script.
   - Provide the address to the input file through the shell, such as: 
-    "input_files/test_cases/molniya/molniya.txt"
+    'input_files/test_cases/molniya/molniya.txt'
   - Propagation begins after providing an input file. When propagation is complete, 3 results figures appear (successive           positions plotted on main body's 2D map, orbital elements, and perturbing forces values through time)
   - Indicate when asked by the shell whether the results need to be saved or not ('y' for yes, 'n' for 'no').
   - If the results need to be saved, a folder having the same name as the case name is created in the 'results' directory,         where the input file, the 3 results figures and a file containing the entire propagation data are saved. In case the           folder already exists, the user will be asked if the results can be overwritten. If not, the results will be saved in an       'autosave' folder, and the user will be asked to modify the case name.
