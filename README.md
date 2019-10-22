@@ -18,7 +18,7 @@ The parameters needed to run the code must be indicated in an input file. Exampl
  
 The 3 first lines give a description of the case studied, the file's readiness status ('parameters need checking' or 'ready    for use', for example) and the source of the parameters used. This part of the file can be modified as the user wants, provided it remains above the "case_name" section. The entry parameters are then defined as follows:
 
-  - Case name: string paramater referring to the scenario's name the user wants to define.
+  - Case name: string parameter referring to the scenario's name the user wants to define.
   
   Spacecraft properties:
   
