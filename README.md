@@ -12,13 +12,54 @@ The present features of the code are the following:
   - Export plots and data file in a results folder if prompted by user.
   
  
- INPUT FILES:
+INPUT FILES:
  
 The parameters needed to run the code must be indicated in an input file. Examples of such files can be found in the            'input_files' folder. 
  
-The 3 first lines give a description of the case studied, the file's readiness status ("parameters need checking" or "ready    for use", for example) and the source of the parameters used. This part of the file can be modified as the user wants, provided it remains above the "case_name" section.
+The 3 first lines give a description of the case studied, the file's readiness status ("parameters need checking" or "ready    for use", for example) and the source of the parameters used. This part of the file can be modified as the user wants, provided it remains above the "case_name" section. The entry parameters are then defined as follows:
+
+  - Case name: string paramater referring to the scenario's name the user wants to define
+  
+  Spacecraft properties
+  
+  - Main gravitating body: string parameter indicating around which celestial body the spacecraft is orbiting. Only 'earth'       can be chosen for now, but additional bodies may be added through future work.
+  - Spacecraft mass: mass of the spacecraft (in kg)
+  - Spacecraft reflective area: reflective area (in m2), necessary to compute the solar radiation pressure 
+  - Spacecraft reflective coefficient: reflective coefficient (unitless), also necessary to compute the solar radiation           pressure 
+  
+  Main body's attitude angles with respect to ECI frame (3-1-3 rotation defined by right ascension, declination and sidereal     time angles) and location on its orbit around the Sun
+  
+  - Right ascension: main body's initial right ascension angle (in deg)
+  - Declination: main body's initial declination angle (in deg)
+  - Sidereal time: main body's initial sidereal time angle (in deg)  
+  - Main body's initial true anomaly: initial true anomaly (in deg) of main body on its orbit around the Sun
+  
+  Spacecraft orbit's initial orbital elements
+  
+  - Inclination (in deg)
+  - Longitude of ascending node (in deg)                             
+  - Argument of periapsis (in deg)                                   
+  - True anomaly (in deg)                                            
+  - Semi-major axis (in m)                                           
+  - Eccentricity (unitless)
+  
+  Propagation parameters
+  
+  - Potential maximum degree (integer, greater than or equal to 2): gravitational potential maximum degree in the series           computation
+  - Time step (in sec): time step used for numerical integration
+  - Final time increment (in sec): propagation timespan
+
+The values associated with each parameter are given on the same corresponding line. The parameters' names (left hand side of the file) should not be changed, only the corresponding values (right hand side of the file) can be modified according to the case studied.
+
  
 HOW TO USE THE CODE:
  
-  - Create or edit an input file. 
-  - Open the script called "main" in MATLAB, and run the entire code.
+  - Create or edit an input file.  
+  - Open the script called "main" in MATLAB, and run the entire script.
+  - Provide the address to the input file through the shell, such as: 
+    "input_files/test_cases/molniya/molniya.txt"
+  - Propagation begins after providing an input file. When propagation is complete, 3 results figures appear (successive           positions plotted on main body's 2D map, orbital elements, and perturbing forces values through time)
+  - Indicate when asked by the shell whether the results need to be saved or not ('y' for yes, 'n' for 'no').
+  - If the results need to be saved, a folder having the same name as the case name is created in the 'results' directory,         where the input file, the 3 results figures and a file containing the entire propagation data are saved. In case the           folder already exists, the user will be asked if the results can be overwritten. If not, the results will be saved in an       'autosave' folder, and the user will be asked to modify the case name.
+  
+  Should you have any questions or concerns, please contact me at mlargeaud@hawk.iit.edu.
