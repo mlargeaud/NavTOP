@@ -32,9 +32,9 @@ PA2BF33																												0.999999999998459
 EARTH MEAN ORBITAL ELEMENTS (J2000) [3]
 ————————————————————————————————————————————————————————————————————————————————
 
-Orbital inclination (deg)            													0.00005
-Longitude of ascending node (deg)  														-11.26064
-Longitude of perihelion (deg)      														102.94719
+Orbital inclination (deg)            													23.436
+Longitude of ascending node (deg)  														359.999
+Longitude of perihelion (deg)      														105.828
 Semi-major axis (m)                														149.60e9
 Orbital eccentricity                 													0.01671022
 
@@ -47,4 +47,4 @@ Sources :
 			calculated with the hydrostatic equilibrium figure of the Earth,
 			Geodesy and Geodynamics 8 (2017) 201-205
 
-	[3]	https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html
+	[3]	STK results on 15 Oct 2019 00:00:00.000 UTCG 

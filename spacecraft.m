@@ -457,7 +457,8 @@ classdef spacecraft
         function [sc, tab] = propagate_orbit_orb_elems_RK4 ...
                 (sc, ti, tf, dt, raw_coeff, max_deg) 
             
-            harmonic_coeff = force_functions.read_harm_coeff_from_file(raw_coeff);
+            harmonic_coeff = force_functions.read_harm_coeff_from_file ...
+                (raw_coeff, max_deg);
             
             radsc = sc.radius;
                 
