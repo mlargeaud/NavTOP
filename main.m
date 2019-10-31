@@ -33,6 +33,7 @@ spHarmPath = strcat('bodies_data/', mb, '/sph_harm.txt');
 spHarm = load(spHarmPath); 
 [mu, r0, RotVecBF, InMomt, PA2BF, OrbElemsMB] = ...
     file_reading_functions.read_body_phys_prop(bodyPath);
+OrbElemsMB(4) = mb_init_TrueAnom;
 
 
 %% ---------------------------- INITIALIZING ---------------------------- %
