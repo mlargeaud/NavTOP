@@ -12,6 +12,7 @@ omega2																												-1.51919062338039e-13
 omega3																												7.29211499718669e-05
 
 Principal moments of inertia (kg/m2) [2]
+
 I1																														8.01008500000000e37
 I2																														8.01026200000000e37
 I3																														8.03648300000000e37
@@ -28,17 +29,6 @@ PA2BF31																												7.55902099197723e-07
 PA2BF32																												1.58475896078709e-06
 PA2BF33																												0.999999999998459
 
-
-EARTH MEAN ORBITAL ELEMENTS (J2000) [3]
-————————————————————————————————————————————————————————————————————————————————
-
-Orbital inclination (deg)            													23.436
-Longitude of ascending node (deg)  														359.999
-Longitude of perihelion (deg)      														105.828
-Semi-major axis (m)                														149469579521.940
-Orbital eccentricity                 													0.016556
-
-
 Sources :
 
 	[1] http://hpiers.obspm.fr/eop-pc/earthor/polmot/pm.html
@@ -46,5 +36,3 @@ Sources :
 	[2] Chengjun Liu, Chengli Huang, Mian Zhang, The principal moments of inertia
 			calculated with the hydrostatic equilibrium figure of the Earth,
 			Geodesy and Geodynamics 8 (2017) 201-205
-
-	[3]	STK results on 15 Oct 2019 00:00:00.000 UTCG
