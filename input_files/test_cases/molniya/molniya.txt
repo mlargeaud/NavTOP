@@ -2,14 +2,15 @@ CASE 1 INPUT FILE
 
 Status : checked, ready for use
 
-Sources :  - "Space flight dynamics", Kluever, C., A., Wiley, 2018, p.60
-           - Yu.F. Kolyuka, N.M. Ivanov, T.I. Afanasieva, T.A. Gridchina,
-             Examination of the lifetime, evolution and re-entry features for
-             the "Molniya" type orbits
+Sources :  [1] "Space flight dynamics", Kluever, C., A., Wiley, 2018, p.60
+           [2] Yu.F. Kolyuka, N.M. Ivanov, T.I. Afanasieva, T.A. Gridchina,
+               Examination of the lifetime, evolution and re-entry features for
+               the "Molniya" type orbits
+           [3] STK results on 15 Oct 2019 00:00:00.000 UTCG
 
 Case name                                                     Molniya_all_pert
 
-SPACECRAFT PROPERTIES
+SPACECRAFT PROPERTIES [1]
 ————————————————————————————————————————————————————————————————————————————————
 
 Main gravitating body                                         earth
@@ -24,15 +25,22 @@ Spacecraft reflective coefficient                             1.7
 INITIAL CONDITIONS
 ————————————————————————————————————————————————————————————————————————————————
 
-Main body's initial orientation
+Main body's initial orientation [3]
 
-Right ascension (deg)                                         0
-Declination (deg)                                             0
-Sidereal time (deg)                                           0
+Right ascension (deg)                                         359.850
+Declination (deg)                                             0.108
+Sidereal time (deg)                                           23.137
 
-Main body's initial true anomaly (deg)                        275.246
+Main body's initial orbital elements [3]
 
-Spacecraft's initial orbital elements
+Main body's orbital inclination (deg)            							23.436
+Main body's longitude of ascending node (deg)  								359.999
+Main body's argument of periapsis (deg)      									105.828
+Main body's true anomaly (deg)                                275.246
+Main body's semi-major axis (m)                								149469579521.940
+Main body's eccentricity                 							        0.016556
+
+Spacecraft's initial orbital elements [2]
 
 Inclination (deg)                                             63.4
 Longitude of ascending node (deg)                             50

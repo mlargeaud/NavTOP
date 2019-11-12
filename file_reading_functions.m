@@ -25,8 +25,15 @@ classdef file_reading_functions
         %                   to body-fixed frame 3-1-3 rotation w.r.t. 
         %                   inertial frame
         %
-        %   mb_init_TrueAnom (scalar, radians) - main body's initial true
-        %                   anomaly on its orbit around the Sun
+        %   mb_init_OrbElems - vector containing the initial orbital 
+        %                   elements describing the main body's orbit  
+        %                   in this order : 
+        %                   (1) inclination (scalar, radians)
+        %                   (2) longitude of ascending node (scalar, radians)
+        %                   (3) argument of periapsis (scalar, radians)
+        %                   (4) true anomaly (scalar, radians)
+        %                   (5) semi-major axis (scalar, meters)
+        %                   (6) eccentricity (scalar, unitless)
         %
         %   sc_init_OrbElems - vector containing the initial orbital 
         %                   elements describing the orbit of the spacecraft 
@@ -44,7 +51,7 @@ classdef file_reading_functions
         %
         %   final_time (scalar, seconds) - final time increment
         function [case_name, main_body, sc_mass, sc_refl_area, sc_refl_coeff, ...
-                rasc, dec, stime, mb_init_TrueAnom, sc_init_OrbElems, ...
+                rasc, dec, stime, mb_init_OrbElems, sc_init_OrbElems, ...
                 max_deg, time_step, final_time] = read_inputs(filename)
             
             fileID = fopen(filename);
@@ -99,13 +106,28 @@ classdef file_reading_functions
                         (textLine, 'Sidereal time (deg)  %f');
                 end
                 
-                % find main body's initial true anomaly
-                mbInitTrueAnomLoc = strfind ...
-                    (textLine, 'Main body''s initial true anomaly (deg)');
-                if mbInitTrueAnomLoc == 1
-                    mb_init_TrueAnom = (pi/180)*sscanf ...
-                        (textLine, 'Main body''s initial true anomaly (deg)  %f');
-                end
+                % find main body's initial orbital elements
+                mbInitOrbElems = strfind ...
+                    (textLine, 'Main body''s orbital inclination (deg)');
+                if mbInitOrbElems == 1
+                    mb_init_OrbElems(1, 1) = (pi/180)*sscanf ...
+                        (textLine, 'Main body''s orbital inclination (deg) %f');
+                    textLine = fgetl(fileID);
+                    mb_init_OrbElems(2, 1) = (pi/180)*sscanf ...
+                        (textLine, 'Main body''s longitude of ascending node (deg) %f');
+                    textLine = fgetl(fileID);
+                    mb_init_OrbElems(3, 1) = (pi/180)*sscanf ...
+                        (textLine, 'Main body''s argument of periapsis (deg) %f');
+                    textLine = fgetl(fileID);
+                    mb_init_OrbElems(4, 1) = (pi/180)*sscanf ...
+                        (textLine, 'Main body''s true anomaly (deg) %f');
+                    textLine = fgetl(fileID);
+                    mb_init_OrbElems(5, 1) = sscanf ...
+                        (textLine, 'Main body''s semi-major axis (m) %f');
+                    textLine = fgetl(fileID);
+                    mb_init_OrbElems(6, 1) = sscanf ...
+                        (textLine, 'Main body''s eccentricity %f');
+                end        
                 
                 % find spacecraft's initial orbital elements
                 scInitOrbElems = strfind ...
@@ -187,15 +209,7 @@ classdef file_reading_functions
         %                   1st column -> X1
         %                   2nd column -> X2
         %                   3rd column -> X3 
-        %
-        %   OrbElemsMB (6 by 1 vector), contains orbital elements : 
-        %                   (1) inclination (scalar, radians)
-        %                   (2) longitude of ascending node (scalar, radians)
-        %                   (3) argument of periapsis (scalar, radians)
-        %                   (4) true anomaly (scalar, radians)
-        %                   (5) semi-major axis (scalar, meters)
-        %                   (6) eccentricity (scalar, unitless)
-        function [mu, r0, RotVecBF, InMomt, PA2BF, OrbElemsMB] = ...
+        function [mu, r0, RotVecBF, InMomt, PA2BF] = ...
                 read_body_phys_prop(filename)
       
             fileID = fopen(filename);
@@ -255,24 +269,6 @@ classdef file_reading_functions
                      PA2BF(3, 2) = sscanf(textLine, 'PA2BF32 %f');
                      textLine = fgetl(fileID);
                      PA2BF(3, 3) = sscanf(textLine, 'PA2BF33 %f');
-                end
-                
-                % find body's orbital parameters
-                OrbElemsLoc = strfind(textLine, 'Orbital inclination (deg)');
-                if OrbElemsLoc == 1
-                     OrbElemsMB(1, 1) = (pi/180)*sscanf ...
-                         (textLine, 'Orbital inclination (deg) %f');
-                     textLine = fgetl(fileID);
-                     OrbElemsMB(2, 1) = (pi/180)*sscanf ...
-                         (textLine, 'Longitude of ascending node (deg) %f');
-                     textLine = fgetl(fileID);
-                     OrbElemsMB(3, 1) = (pi/180)*sscanf ...
-                         (textLine, 'Longitude of perihelion (deg) %f');
-                     textLine = fgetl(fileID);
-                     OrbElemsMB(4, 1) = 0; %default value
-                     OrbElemsMB(5, 1) = sscanf(textLine, 'Semi-major axis (m) %f');
-                     textLine = fgetl(fileID);
-                     OrbElemsMB(6, 1) = sscanf(textLine, 'Orbital eccentricity %f');
                 end
                 
                 textLine = fgetl(fileID);

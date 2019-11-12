@@ -23,7 +23,7 @@ file = input(promptInput);
 % reading input data from file
 disp('Reading inputs ...');
 [case_name, mb, sc_mass, sc_refl_area, sc_refl_coeff, rasc, dec, stime, ...
-    mb_init_TrueAnom, sc_init_OrbElems, max_deg, time_step, final_time] = ...
+    mb_init_OrbElems, sc_init_OrbElems, max_deg, time_step, final_time] = ...
     file_reading_functions.read_inputs(file);
 
 % reading main gravitating body data
@@ -31,7 +31,7 @@ disp('Reading main gravitating body data ...');
 bodyPath = strcat('bodies_data/', mb, '/phys_orb_param.txt');
 spHarmPath = strcat('bodies_data/', mb, '/sph_harm.txt');
 spHarm = load(spHarmPath); 
-[mu, r0, RotVecBF, InMomt, PA2BF, OrbElemsMB] = ...
+[mu, r0, RotVecBF, InMomt, PA2BF] = ...
     file_reading_functions.read_body_phys_prop(bodyPath);
 
 
@@ -42,7 +42,7 @@ disp('Initializing ...');
 % generating main body object
 disp('Generating main body object ...');
 mb_obj = main_body(mu, r0, RotVecBF, InMomt, PA2BF, rasc, dec, stime, ...
-    OrbElemsMB);
+    mb_init_OrbElems);
 
 % generating spacecraft
 disp('Generating spacecraft object ...');
