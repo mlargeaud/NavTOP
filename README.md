@@ -16,7 +16,7 @@ INPUT FILES:
  
 The parameters needed to run the code must be indicated in an input file. Examples of such files can be found in the            'input_files' folder. 
  
-The 3 first lines give a description of the case studied, the file's readiness status ('parameters need checking' or 'ready    for use', for example) and the source of the parameters used. This part of the file can be modified as the user wants, provided it remains above the "case_name" section. The entry parameters are then defined as follows:
+The lines above "Case name" give a description of the case studied, the file's readiness status ('parameters need checking' or 'ready for use', for example) and the source of the parameters used. This part of the file can be modified as the user wants, provided it remains above the "Case name" entry. The entry parameters are then defined as follows:
 
   - Case name: string parameter referring to the scenario's name the user wants to define.
   
@@ -27,12 +27,19 @@ The 3 first lines give a description of the case studied, the file's readiness s
   - Spacecraft reflective area (m2): necessary to compute the solar radiation pressure,
   - Spacecraft reflective coefficient (unitless): also necessary to compute the solar radiation pressure. 
   
-  Main body's attitude angles with respect to ECI frame (3-1-3 rotation defined by right ascension, declination and sidereal     time angles) and location on its orbit around the Sun:
+  Main body's attitude angles with respect to ECI frame (3-2-3 rotation defined by right ascension, declination and sidereal     time angles) and initial orbit around the Sun:
   
   - Right ascension (deg),
   - Declination (deg),
   - Sidereal time (deg),
-  - Main body's initial true anomaly (deg): main body's initial position on its orbit around the Sun.
+  
+  - Main body's orbital inclination (deg),           							
+  - Main body's longitude of ascending node (deg),  								
+  - Main body's argument of periapsis (deg),      								
+  - Main body's true anomaly (deg),                                
+  - Main body's semi-major axis (m),                							
+  - Main body's eccentricity (unitless),                 							       
+  - Main body's initial true anomaly (deg).
   
   Spacecraft orbit's initial orbital elements:
   
@@ -56,7 +63,7 @@ HOW TO USE THE CODE:
  
   - Create or edit an input file.  
   - Open the script called 'main' in MATLAB, and run the entire script.
-  - Provide the address to the input file through the shell, such as: 
+  - When prompted, provide the address to the input file through the shell, such as: 
     'input_files/test_cases/molniya/molniya.txt'
   - Propagation begins after providing an input file. When propagation is complete, 3 results figures appear (successive           positions plotted on main body's 2D map, orbital elements, and perturbing forces values through time)
   - Indicate when asked by the shell whether the results need to be saved or not ('y' for yes, 'n' for 'no').
