@@ -506,7 +506,7 @@ classdef spacecraft
             
             % initializing result table
             N = ((tf - ti)/dt) + 1;
-            tab = zeros(N, 24);
+            tab = zeros(N, 27);
                
             % propagating orbit for each time increment until tf is reached 
             for j = 1:N
@@ -516,7 +516,7 @@ classdef spacecraft
                     (rasc, dec, stime, e, a, O, i, o, n);
                 
                 % saving data in array
-                tab(j, :) = [t, sph_coord', rasc, dec, stime, ...
+                tab(j, :) = [t, sc.radius', sph_coord', rasc, dec, stime, ...
                     Fg', Fsrp', Ftb', ...
                     sc.IsInUmbra, OrbElemsSC', err];
                 

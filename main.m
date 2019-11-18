@@ -66,21 +66,21 @@ disp('Plotting results ...');
 
 % plotting orbits on map
 pos = [];
-pos(1, :, :) = [prop_res(:, 2), prop_res(:, 3)*180/pi, ...
-    prop_res(:, 4)*180/pi];
+pos(1, :, :) = [prop_res(:, 5), prop_res(:, 6)*180/pi, ...
+    prop_res(:, 7)*180/pi];
 
 fin_orb_index = size(prop_res, 1);
 plotting_functions.plot_wdata(pos(1,:,2)', pos(1,:,3)', ...
-    prop_res(fin_orb_index,5), prop_res(fin_orb_index,6), ...
-    prop_res(fin_orb_index,7), prop_res(fin_orb_index, 18:23)', 'Hours', ...
+    prop_res(fin_orb_index,8), prop_res(fin_orb_index,9), ...
+    prop_res(fin_orb_index,10), prop_res(fin_orb_index, 21:26)', 'Hours', ...
     prop_res(:, 1)/3600, ...
-    prop_res(:, 17), '', '~');
+    prop_res(:, 20), '', '~');
 
 orbs_fig = gcf;
 
 % plotting orbital elements and perturbating accelerations
 [prop_fig, acc_fig] = plotting_functions.plotPropRes(prop_res(:, 1)/3600, ...
-    prop_res(:, 18:23), prop_res(:, 8:16));
+    prop_res(:, 21:26), prop_res(:, 11:19));
 
 
 %% ------------------------- EXPORTING RESULTS -------------------------- %
@@ -96,12 +96,9 @@ while (expIndex ~= 'y' || expIndex ~= 'n')
     switch(expIndex)
 
         case 'y'
-            
-            addpath ...
-            ('/Users/maxime/Documents/ORBs project/Dynamic model/v122/export_fig');
-        
-            addpath ...
-            ('/Users/maxime/Documents/ORBs project/Dynamic model/v122'); 
+
+            addpath(pwd);
+            addpath(strcat(pwd, '/export_fig'));
             
             % test if the results folder does not exist, 
             % create one if it is the case 
@@ -276,9 +273,8 @@ while (expIndex ~= 'y' || expIndex ~= 'n')
     
 end
 
-% if no export options were understood by the program, autosave
-addpath ...
-('/Users/maxime/Documents/ORBs project/Dynamic model/v122/export_fig');
+% if no export option was understood by the program, autosave
+addpath(strcat(pwd, '/export_fig'));
 
 % test if the results and autosave folders do not exist, create them 
 if exist('results', 'dir') == 0
