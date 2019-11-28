@@ -442,18 +442,20 @@ classdef spacecraft
         %                   properties at each instant during propagation. 
         %                   Each row corresponds to a particular instant :
         %                   tab(:, 1) -> time increment
-        %                   tab(:, 2) -> planet-centric radius
-        %                   tab(:, 3) -> latitude
-        %                   tab(:, 4) -> longitude
-        %                   tab(:, 5) -> main body's right ascension
-        %                   tab(:, 6) -> main body's declination
-        %                   tab(:, 7) -> main body's sidereal time
-        %                   tab(:, 8:10) -> gravitational perturbation
-        %                   tab(:, 11:13) -> sol. rad. pressure 
-        %                   tab(:, 14:16) -> third body gravity
-        %                   tab(:, 17) -> inside/outside umbra index
-        %                   tab(:, 18:23) -> orbital elements
-        %                   tab(:, 24) -> RK4 computation error on orb. elems
+        %                   tab(:, 2:4) -> cartesian coordinates (ECI)
+        %                   tab(:, 5:7) -> cartesian velocity (ECI)
+        %                   tab(:, 8) -> planet-centric radius
+        %                   tab(:, 9) -> latitude
+        %                   tab(:, 10) -> longitude
+        %                   tab(:, 11) -> main body's right ascension
+        %                   tab(:, 12) -> main body's declination
+        %                   tab(:, 13) -> main body's sidereal time
+        %                   tab(:, 14:16) -> gravitational perturbation
+        %                   tab(:, 17:19) -> sol. rad. pressure 
+        %                   tab(:, 20:22) -> third body gravity
+        %                   tab(:, 23) -> inside/outside umbra index
+        %                   tab(:, 24:29) -> orbital elements
+        %                   tab(:, 30) -> RK4 computation error on orb. elems
         function [sc, tab] = propagate_orbit_orb_elems_RK4 ...
                 (sc, ti, tf, dt, raw_coeff, max_deg) 
             
@@ -506,7 +508,7 @@ classdef spacecraft
             
             % initializing result table
             N = ((tf - ti)/dt) + 1;
-            tab = zeros(N, 27);
+            tab = zeros(N, 30);
                
             % propagating orbit for each time increment until tf is reached 
             for j = 1:N
@@ -516,9 +518,9 @@ classdef spacecraft
                     (rasc, dec, stime, e, a, O, i, o, n);
                 
                 % saving data in array
-                tab(j, :) = [t, sc.radius', sph_coord', rasc, dec, stime, ...
-                    Fg', Fsrp', Ftb', ...
-                    sc.IsInUmbra, OrbElemsSC', err];
+                tab(j, :) = [t, sc.radius', sc.velocity', sph_coord', ...
+                    rasc, dec, stime, Fg', Fsrp', Ftb', sc.IsInUmbra, ...
+                    OrbElemsSC', err];
                 
                 % solve variational equations using RK4 method                                 
                 [sc.orb_elems, Fg, Fsrp, Ftb] = ...
