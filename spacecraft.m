@@ -65,7 +65,7 @@ classdef spacecraft
                 sc.orb_elems = varargin{5};
                 
                 sc.gamma = spacecraft.setGammaFromOrbElems ...
-                    (sc.orb_elems(4), sc.orb_elems(5));
+                    (sc.orb_elems(4), sc.orb_elems(6));
                 
                 sc.radius = spacecraft.setR(sc.orb_elems);
                 
@@ -261,7 +261,7 @@ classdef spacecraft
         %   gam (scalar, radians) - spacecraft's flight path angle
         function gam = setGammaFromOrbElems(nu, ecc)
             
-            gam = atan((ecc*sin(nu))/(1 + ecc*cos(nu)));
+            gam = atan2((ecc*sin(nu)), (1 + ecc*cos(nu)));
             
         end 
         
@@ -535,7 +535,7 @@ classdef spacecraft
                 
                 % update remaining orbital parameters
                 sc.gamma = spacecraft.setGammaFromOrbElems ...
-                    (sc.orb_elems(4), sc.orb_elems(5));
+                    (sc.orb_elems(4), sc.orb_elems(6));
                 
                 sc.radius = spacecraft.setR(sc.orb_elems);
                 
