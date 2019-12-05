@@ -461,8 +461,6 @@ classdef spacecraft
             
             harmonic_coeff = force_functions.read_harm_coeff_from_file ...
                 (raw_coeff, max_deg);
-            
-            radsc = sc.radius;
                 
             OrbElemsSC = sc.orb_elems;
 
@@ -542,13 +540,13 @@ classdef spacecraft
                 sc.velocity = spacecraft.setV ...
                     (sc.mb.mu, sc.radius, sc.gamma, sc.orb_elems);
                 
-                sc.h = cross(radsc, sc.velocity);
+                sc.h = cross(sc.radius, sc.velocity);
                 
                 sc.r_2sun = spacecraft.vec_sc2sun(OrbElemsSC, OrbElemsMB);
                 
                 % update spacecraft position w.r.t. umbra 
                 sc.IsInUmbra = spacecraft.InUmbra ...
-                    (radsc, OrbElemsMB, SCONE2I, hCone, ConeApert);
+                    (sc.radius, OrbElemsMB, SCONE2I, hCone, ConeApert);
                 
                 % update main body's orientation
                 sc.mb = main_body.update_angles(sc.mb, dt);
@@ -556,9 +554,7 @@ classdef spacecraft
                 % update time increment
                 t = t + dt;
                 
-                % collecting new parameters
-                radsc = sc.radius;
-                
+                % collecting new parameters                
                 OrbElemsSC = sc.orb_elems;
             
                 i = OrbElemsSC(1);
