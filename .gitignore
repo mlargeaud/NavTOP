@@ -15,3 +15,8 @@ Accuracy Tests/AT1/orb_param_difference_wSTK.fig
 Accuracy Tests/AT2/ECI_pos_difference_wSTK.fig
 Accuracy Tests/AT2/ECI_vel_difference_wSTK.fig
 Accuracy Tests/AT2/orb_param_difference_wSTK.fig
+Accuracy Tests/AT3 (Gravity only)/arrNavTOP.mat
+Accuracy Tests/AT3 (Gravity only)/arrSTK.mat
+Accuracy Tests/AT3 (Gravity only)/ECI_pos_difference_wSTK.fig
+Accuracy Tests/AT3 (Gravity only)/ECI_vel_difference_wSTK.fig
+Accuracy Tests/AT3 (Gravity only)/orb_param_difference_wSTK.fig
