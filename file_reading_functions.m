@@ -131,23 +131,34 @@ classdef file_reading_functions
                 
                 % find spacecraft's initial orbital elements
                 scInitOrbElems = strfind ...
-                    (textLine, 'Inclination (deg)');
+                    (textLine, 'Spacecraft''s initial conditions');   
                 if scInitOrbElems == 1
-                    sc_init_OrbElems(1, 1) = (pi/180)*sscanf ...
-                        (textLine, 'Inclination (deg) %f');
+                    textLine = fgetl(fileID); %#ok<NASGU>
                     textLine = fgetl(fileID);
-                    sc_init_OrbElems(2, 1) = (pi/180)*sscanf ...
-                        (textLine, 'Longitude of ascending node (deg) %f');
+                    sc_init_param = sscanf ...
+                        (textLine, 'Initial parameters %100c');
+                    textLine = fgetl(fileID); %#ok<NASGU>
                     textLine = fgetl(fileID);
-                    sc_init_OrbElems(3, 1) = (pi/180)*sscanf ...
-                        (textLine, 'Argument of periapsis (deg) %f');
-                    textLine = fgetl(fileID);
-                    sc_init_OrbElems(4, 1) = (pi/180)*sscanf ...
-                        (textLine, 'True anomaly (deg) %f');
-                    textLine = fgetl(fileID);
-                    sc_init_OrbElems(5, 1) = sscanf(textLine, 'Semi-major axis (m) %f');
-                    textLine = fgetl(fileID);
-                    sc_init_OrbElems(6, 1) = sscanf(textLine, 'Eccentricity %f');
+                    switch(sc_init_param)
+                        case 'Orbital elements' 
+                            sc_init_OrbElems(1, 1) = (pi/180)*sscanf ...
+                            (textLine, 'Inclination (deg) %f');
+                            textLine = fgetl(fileID);
+                            sc_init_OrbElems(2, 1) = (pi/180)*sscanf ...
+                                (textLine, 'Longitude of ascending node (deg) %f');
+                            textLine = fgetl(fileID);
+                            sc_init_OrbElems(3, 1) = (pi/180)*sscanf ...
+                                (textLine, 'Argument of periapsis (deg) %f');
+                            textLine = fgetl(fileID);
+                            sc_init_OrbElems(4, 1) = (pi/180)*sscanf ...
+                                (textLine, 'True anomaly (deg) %f');
+                            textLine = fgetl(fileID);
+                            sc_init_OrbElems(5, 1) = sscanf ...
+                                (textLine, 'Semi-major axis (m) %f');
+                            textLine = fgetl(fileID);
+                            sc_init_OrbElems(6, 1) = sscanf ...
+                                (textLine, 'Eccentricity %f');
+                    end 
                 end
                 
                 % find potential maximum degree
