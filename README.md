@@ -12,7 +12,7 @@ The present features of the code are the following:
   - Export plots and data file in a results folder if prompted by user.
   
  
-INPUT FILES:
+## Input files
  
 The parameters needed to run the code must be indicated in an input file. Examples of such files can be found in the            'input_files' folder. 
  
@@ -59,7 +59,7 @@ The lines above "Case name" give a description of the case studied, the file's r
 The values associated with each parameter are given on the same corresponding line. The parameters' names (left hand side of the file) should not be changed, only the corresponding values (right hand side of the file) can be modified according to the case studied.
 
  
-HOW TO USE THE CODE:
+# How to run the code
  
   - Create or edit an input file.  
   - Open the script called 'main' in MATLAB, and run the entire script.
