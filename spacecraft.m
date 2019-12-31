@@ -263,8 +263,79 @@ classdef spacecraft
             
             gam = atan2((ecc*sin(nu)), (1 + ecc*cos(nu)));
             
-        end 
+        end
         
+        
+        % COMPUTE ECCENTRIC ANOMALY FROM MEAN ANOMALY
+        %
+        % Inputs :
+        %   M (scalar, radians) - spacecraft's mean anomaly
+        %
+        %   ecc (scalar, unitless) - spacecraft orbit's eccentricity
+        %
+        % Outputs :
+        %   E (scalar, radians) - spacecraft's eccentric anomaly
+        %
+        % Comments :
+        %   The eccentric anomaly is computed using the Newton-Raphson 
+        %   root-finding method. This works as long as the root is far 
+        %   from a potential stationary point on the function. 
+        %   In this specific case, the function can be written as 
+        %   
+        %       f(E) = E - ecc*sin(E) - M,
+        %
+        %   which implies
+        %   
+        %       f'(E) = 1 - ecc*cos(E).
+        %
+        %   As long as ecc is inferior to 1, f'(E) can not reach 0, and the
+        %   Newton-Raphson method can be used flawlessly. However, if
+        %   ecc >= 1, f'(E) can have potential roots, and the method may 
+        %   fail. This is not likely to lead to a division by 0 (because of
+        %   the round-off errors), but the method may converge to an incorrect
+        %   value.
+        function E = Mean2EccAnom(M, ecc)
+            
+            % If the eccentricity is superior or equal to 1, warns the user
+            % that the results may be flawed with this method
+            if ecc >= 1
+                warning('on', 'backtrace');
+                warning ...
+                ('The Newton-Raphson method should not be used for eccentricities greater or equal to 1');
+            end
+            
+            % Convergence and number of iterations tolerance for Newton-
+            % Raphson method 
+            threshold = 10^(-6);
+            it_max = 1000000;
+            
+            % Initial guess 
+            E_i = pi;
+            
+            % First iteration of Newton-Raphson method
+            count = 1;
+            E = E_i - (E_i - ecc*sin(E_i) - M)/(1 - ecc*cos(E_i));
+            
+            % Main loop
+            while (abs(E - E_i) >= threshold)
+                
+                % No-convergence control
+                if count == it_max
+                    warning('on', 'backtrace');
+                    warning ...
+                    ('Newton-Raphson did not converge to eccentric anomaly value');
+                    return;
+                end
+                
+                count = count + 1;
+                E_i = E;
+                
+                % Compute next value
+                E = E_i - (E_i - ecc*sin(E_i) - M)/(1 - ecc*cos(E_i));
+                
+            end  
+            
+        end 
         
         
         % COMPUTE RADIUS VECTOR FROM SPACECRAFT TO SUN IN INERTIAL FRAME
