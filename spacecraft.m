@@ -293,16 +293,17 @@ classdef spacecraft
         %   ecc >= 1, f'(E) can have potential roots, and the method may 
         %   fail. This is not likely to lead to a division by 0 (because of
         %   the round-off errors), but the method may converge to an incorrect
-        %   value.
+        %   value. Moreover, the concept of mean anomaly can not be used
+        %   for parabolic or hyperbolic orbits, since it refers to an angle
+        %   computed from a fictitious circular orbit having the same period
+        %   as the actual one. Therefore, the use of an eccentricity higher
+        %   or equal to 1 is prevented. 
         function E = Mean2EccAnom(M, ecc)
             
-            % If the eccentricity is superior or equal to 1, warns the user
-            % that the results may be flawed with this method
+            % Controls if the eccentricity is superior or equal to 1
             if ecc >= 1
-                warning('on', 'backtrace');
-                warning ...
-                ('The Newton-Raphson method should not be used for eccentricities greater or equal to 1');
-            end
+                error('Eccentricity must remain below 1')
+            end 
             
             % Convergence and number of iterations tolerance for Newton-
             % Raphson method 
@@ -319,7 +320,7 @@ classdef spacecraft
             % Main loop
             while (abs(E - E_i) >= threshold)
                 
-                % No-convergence control
+                % No convergence 
                 if count == it_max
                     warning('on', 'backtrace');
                     warning ...
@@ -334,6 +335,35 @@ classdef spacecraft
                 E = E_i - (E_i - ecc*sin(E_i) - M)/(1 - ecc*cos(E_i));
                 
             end  
+            
+        end 
+        
+        
+        % COMPUTE TRUE ANOMALY FROM ECCENTRIC ANOMALY
+        %
+        % Inputs :
+        %   E (scalar, radians) - spacecraft's eccentric anomaly
+        %
+        %   ecc (scalar, unitless) - spacecraft orbit's eccentricity
+        %
+        % Outputs :
+        %   nu (scalar, radians) - spacecraft's true anomaly
+        function nu = Ecc2TrueAnom(E, ecc)
+            
+            % Test if E < pi (spacecraft is before apogee)
+            if E < pi
+                
+                % Then tan(E/2) > 0 and nu is given in the correct quadrant 
+                % by the expression used 
+                nu = 2*atan(sqrt((1+ecc)/(1-ecc))*tan(E/2));
+            
+            else 
+                
+                % Here, tan(E/2) < 0 and the expression above gives nu < 0. 
+                % Shifting by 2*pi
+                nu = 2*pi + 2*atan(sqrt((1+ecc)/(1-ecc))*tan(E/2));
+                
+            end
             
         end 
         

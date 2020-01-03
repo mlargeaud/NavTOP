@@ -3,6 +3,7 @@ classdef test_functions
     methods(Static)
         
         % PLOT ECCENTRIC ANOMALY EVOLUTION WITH THE MEAN ANOMALY
+        % PLOT TRUE ANOMALY EVOLUTION WITH THE ECCENTRIC ANOMALY
         %
         % Inputs :
         %   ecc_start (scalar, unitless) - start eccentricity value
@@ -18,10 +19,11 @@ classdef test_functions
         %
         %   eccs (vector of size nb_ecc) - contains the eccentricity values
         %
-        %   resTab (nb_M by nb_ecc matrix) - contains eccentric anomaly values
+        %   resTabE (nb_M by nb_ecc matrix) - contains eccentric anomaly values
         %       depending on the mean anomaly (along lines) and eccentricity 
         %       (along columns)  
-        function [Ms, eccs, resTab] = PlotEccAnom(ecc_start, ecc_stop, nb_ecc, nb_M)
+        function [Ms, eccs, resTabE, resTabNu] = PlotEccAnom ...
+                (ecc_start, ecc_stop, nb_ecc, nb_M)
             
             % Initial values 
             ecc = ecc_start;
@@ -30,10 +32,11 @@ classdef test_functions
             M_step = 2*pi/(nb_M-1);
             ecc_step = (ecc_stop - ecc_start)/(nb_ecc-1);
             
-            % M, ecc values and results array
+            % M, ecc values and results arrays
             Ms = zeros(nb_M, 1);
             eccs = zeros(nb_ecc, 1);
-            resTab = zeros(nb_M, nb_ecc);
+            resTabE = zeros(nb_M, nb_ecc);
+            resTabNu = zeros(nb_M, nb_ecc);
             
             % Main loop
             for j = 1:nb_ecc
@@ -43,7 +46,8 @@ classdef test_functions
                 for i = 1:nb_M
                     
                     Ms(i, 1) = M;
-                    resTab(i, j) = spacecraft.Mean2EccAnom(M, ecc);
+                    resTabE(i, j) = spacecraft.Mean2EccAnom(M, ecc);
+                    resTabNu(i, j) = spacecraft.Ecc2TrueAnom(resTabE(i, j), ecc);
                     M = M + M_step;
                     
                 end
@@ -53,12 +57,12 @@ classdef test_functions
                 
             end  
             
-            % Plotting loop
+            % Plotting loop for E
             figure;
             for j = 1:nb_ecc
                 
                 hold on;
-                plot(Ms, resTab(:, j));
+                plot(Ms, resTabE(:, j));
                 
             end 
             
@@ -68,6 +72,22 @@ classdef test_functions
                 'FontSize', 14);
             xlabel('Mean anomaly (rad)', 'FontSize', 14);
             ylabel('Eccentric anomaly (rad)', 'FontSize', 14);
+            
+            % Plotting loop for nu
+            figure;
+            for j = 1:nb_ecc
+                
+                hold on;
+                plot(resTabE(:, j), resTabNu(:, j));
+                
+            end 
+            
+            grid on
+            set(gca,'FontSize', 12)
+            title('True anomaly evolution with eccentric anomaly', ...
+                'FontSize', 14);
+            xlabel('Eccentric anomaly (rad)', 'FontSize', 14);
+            ylabel('True anomaly (rad)', 'FontSize', 14);
             
         end
         
