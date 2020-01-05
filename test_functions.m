@@ -22,7 +22,7 @@ classdef test_functions
         %   resTabE (nb_M by nb_ecc matrix) - contains eccentric anomaly values
         %       depending on the mean anomaly (along lines) and eccentricity 
         %       (along columns)  
-        function [Ms, eccs, resTabE, resTabNu] = PlotEccAnom ...
+        function [Ms, eccs, resTabE, resTabNu] = PlotAnoms ...
                 (ecc_start, ecc_stop, nb_ecc, nb_M)
             
             % Initial values 
@@ -88,6 +88,7 @@ classdef test_functions
                 'FontSize', 14);
             xlabel('Eccentric anomaly (rad)', 'FontSize', 14);
             ylabel('True anomaly (rad)', 'FontSize', 14);
+            legend('e = 0', 'e = 0.2475', 'e = 0.4950', 'e = 0.7425', 'e = 0.99');
             
         end
         
