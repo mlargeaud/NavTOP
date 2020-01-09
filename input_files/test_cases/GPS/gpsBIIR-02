@@ -2,11 +2,12 @@ GPS Block IIR 02 INPUT FILE
 
 Status : work in progress
 
-Sources :  [1] https://www.celestrak.com/NORAD/archives/
+Sources : [1] STK results on 23 Jul 1997 05:38:07.440 UTCG 
+          [2] https://www.celestrak.com/NORAD/archives/
 
 Case name                                                     gpsBIIR-02
 
-SPACECRAFT PROPERTIES [1]
+SPACECRAFT PROPERTIES
 ————————————————————————————————————————————————————————————————————————————————
 
 Main gravitating body                                         earth
@@ -21,22 +22,22 @@ Spacecraft reflective coefficient                             1.7
 INITIAL CONDITIONS
 ————————————————————————————————————————————————————————————————————————————————
 
-Main body's initial orientation [3]
+Main body's initial orientation [1]
 
-Right ascension (deg)                                         359.850
-Declination (deg)                                             0.108
-Sidereal time (deg)                                           23.137
+Right ascension (deg)                                         -170.069
+Declination (deg)                                             0.014
+Sidereal time (deg)                                           -164.365
 
-Main body's initial orbital elements [3]
+Main body's initial orbital elements [1]
 
-Main body's orbital inclination (deg)            							23.436
-Main body's longitude of ascending node (deg)  								359.999
-Main body's argument of periapsis (deg)      									105.828
-Main body's true anomaly (deg)                                275.246
-Main body's semi-major axis (m)                								149469579521.940
-Main body's eccentricity                 							        0.016556
+Main body's orbital inclination (deg)            							23.441
+Main body's longitude of ascending node (deg)  								359.995
+Main body's argument of periapsis (deg)      									104.384
+Main body's true anomaly (deg)                                196.074
+Main body's semi-major axis (m)                								149497361245.610
+Main body's eccentricity                 							        0.017271
 
-Spacecraft's initial conditions [1]
+Spacecraft's initial conditions [2]
 
 Initial parameters                                            Orbital elements
 
@@ -53,5 +54,5 @@ PROPAGATION PARAMETERS
 
 Potential maximum degree                                      22
 
-Time step (sec)                                               60
-Final time increment (sec)                                    86400
+Time step (sec)                                               67
+Final time increment (sec)                                    87904
