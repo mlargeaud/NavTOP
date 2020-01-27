@@ -1,5 +1,5 @@
 # NavTOP
-### Orbit propagation code
+## Orbit propagation code
 
 NavTOP is an Earth-bound orbit determination code developed for research purposes within the Navigation Laboratory at the Illinois Institute of Technology. This program is developed using MATLAB, and relies heavily on object-oriented programming. 
 
