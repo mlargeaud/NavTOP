@@ -7,8 +7,10 @@ classdef spacecraft
         
         mass;               % (scalar, kilograms), spacecraft's mass
         radius;             % (3 by 1 vector, meters), inertial planet-centric radius
-        r_2sun;             % (3 by 1 vector, meters), vector from s/c to Sun in inertial frame
         velocity;           % (3 by 1 vector, meters/second), inertial velocity
+        radBF;              % (3 by 1 vector, meters), radius vector in body-fixed frame
+        velBF;              % (3 by 1 vector, meters/second), velocity vector in body-fixed frame
+        r_2sun;             % (3 by 1 vector, meters), vector from s/c to Sun in inertial frame
         reflarea;           % (scalar, meters squared), reflective area
         reflcoeff;          % (scalar, unitless), reflective coefficient
         
@@ -72,6 +74,9 @@ classdef spacecraft
                 sc.velocity = spacecraft.setV ... 
                     (sc.mb.mu, sc.radius, sc.gamma, sc.orb_elems);
                 
+                sc.radBF = sc.mb.BF2I'*sc.radius;
+                sc.velBF = sc.mb.BF2I'*sc.velocity;
+                
                 sc.h = cross(sc.radius, sc.velocity);
                                 
             else 
@@ -84,6 +89,8 @@ classdef spacecraft
                 sc.velocity = varargin{6};
                 sc.orb_elems = spacecraft.compute_orb_elems ...
                     (sc.mb.mu, sc.radius, sc.velocity);
+                sc.radBF = sc.mb.BF2I'*sc.radius;
+                sc.velBF = sc.mb.BF2I'*sc.velocity;
                 
             end 
             
@@ -607,7 +614,7 @@ classdef spacecraft
             
             % initializing result table
             N = ((tf - ti)/dt) + 1;
-            tab = zeros(N, 30);
+            tab = zeros(N, 36);
                
             % propagating orbit for each time increment until tf is reached 
             for j = 1:N
@@ -616,10 +623,14 @@ classdef spacecraft
                 sph_coord = rotation_functions.LocalToPlanetaryCoord ...
                     (rasc, dec, stime, e, a, O, i, o, n);
                 
+                % computing spacecraft location in body-fixed frame
+                sc.radBF = sc.mb.BF2I'*sc.radius;
+                sc.velBF = sc.mb.BF2I'*sc.velocity; 
+                
                 % saving data in array
-                tab(j, :) = [t, sc.radius', sc.velocity', sph_coord', ...
-                    rasc, dec, stime, Fg', Fsrp', Ftb', sc.IsInUmbra, ...
-                    OrbElemsSC', err];
+                tab(j, :) = [t, sc.radius', sc.velocity', sc.radBF', ...
+                    sc.velBF', sph_coord', rasc, dec, stime, Fg', Fsrp', ...
+                    Ftb', sc.IsInUmbra, OrbElemsSC', err];
                 
                 % solve variational equations using RK4 method                                 
                 [sc.orb_elems, Fg, Fsrp, Ftb] = ...
