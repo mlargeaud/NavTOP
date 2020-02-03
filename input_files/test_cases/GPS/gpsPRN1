@@ -42,12 +42,12 @@ Spacecraft's initial conditions [3]
 
 Initial parameters                                            Orbital elements
 
-Inclination (deg)                                             58.8430737511709
-Longitude of ascending node (deg)                             67.8403897222947
-Argument of periapsis (deg)                                   111.1887654166314
-True anomaly (deg)                                            180.6632969621159
-Semi-major axis (m)                                           18079613.53536980
-Eccentricity                                                  0.473875484961189
+Inclination (deg)                                             55.920
+Longitude of ascending node (deg)                             78.225
+Argument of periapsis (deg)                                   39.792
+True anomaly (deg)                                            246.342
+Semi-major axis (m)                                           26558928.309
+Eccentricity                                                  0.008265
 
 
 PROPAGATION PARAMETERS
