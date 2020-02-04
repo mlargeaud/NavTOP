@@ -625,7 +625,11 @@ classdef spacecraft
                 
                 % computing spacecraft location in body-fixed frame
                 sc.radBF = sc.mb.BF2I'*sc.radius;
-                sc.velBF = sc.mb.BF2I'*sc.velocity; 
+                
+                % spacecraft velocity w.r.t body-fixed frame, expressed in
+                % body fixed frame as well
+                ECI_vel_BF = sc.velocity - cross(sc.mb.RotVecIn, sc.radius);
+                sc.velBF = sc.mb.BF2I'*ECI_vel_BF; 
                 
                 % saving data in array
                 tab(j, :) = [t, sc.radius', sc.velocity', sc.radBF', ...
