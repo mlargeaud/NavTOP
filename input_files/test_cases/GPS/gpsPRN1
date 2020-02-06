@@ -3,8 +3,9 @@ GPS PRN1 INPUT FILE
 Status : work in progress
 
 Sources : [1] https://gssc.esa.int/navipedia/index.php/GPS_Space_Segment#cite_note-6
-          [2] STK results on 1 Jan. 00:00:00.000 UTCG
-          [3] NGA database nga20342.eph
+          [2] http://hpiers.obspm.fr/eop-pc/index.php?index=matrice&lang=en on 1 Jan. 00:00:00.000 UTCG
+          [3] STK results on 1 Jan. 00:00:00.000 UTCG
+          [4] NGA database nga20342.eph
 
 Case name                                                     gpsPRN1
 
@@ -25,11 +26,11 @@ INITIAL CONDITIONS
 
 Main body's initial orientation [2]
 
-Right ascension (deg)                                         -0.902
-Declination (deg)                                             0.104
-Sidereal time (deg)                                           101.018
+Right ascension (deg)                                         89.1370716309948
+Declination (deg)                                             0.104033112862453
+Sidereal time (deg)                                           10.9798680695267
 
-Main body's initial orbital elements [2]
+Main body's initial orbital elements [3]
 
 Main body's orbital inclination (deg)            							23.436
 Main body's longitude of ascending node (deg)  								0.002
@@ -38,16 +39,16 @@ Main body's true anomaly (deg)                                358.198
 Main body's semi-major axis (m)                								149667275269.996
 Main body's eccentricity                 							        0.017153
 
-Spacecraft's initial conditions [3]
+Spacecraft's initial conditions [4]
 
 Initial parameters                                            Orbital elements
 
-Inclination (deg)                                             55.920
-Longitude of ascending node (deg)                             78.225
-Argument of periapsis (deg)                                   39.792
-True anomaly (deg)                                            246.342
-Semi-major axis (m)                                           26558928.309
-Eccentricity                                                  0.008265
+Inclination (deg)                                             55.9195729062151
+Longitude of ascending node (deg)                             78.2256588406894
+Argument of periapsis (deg)                                   39.9246291224827
+True anomaly (deg)                                            246.208358537565
+Semi-major axis (m)                                           26558603.8783692
+Eccentricity                                                  0.00825141871343863
 
 
 PROPAGATION PARAMETERS

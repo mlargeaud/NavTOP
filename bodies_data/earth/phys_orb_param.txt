@@ -3,13 +3,13 @@ EARTH PHYSICAL PARAMETERS
 
 Gravitational parameter (m3/s2) 															3.986004415e14
 
-Mean radius (m) 																							6378136.3 
+Mean radius (m) 																							6378136.3
 
 Unit rotation vector components expressed in Body Fixed frame (rad/s) [1]
 
-omega1																										  	2.02558749404254e-09
-omega2																												-1.51919062338039e-13
-omega3																												7.29211499718669e-05
+omega1																										  	0.033574e-09
+omega2																												-0.097780e-09
+omega3																												72921.150691e-09
 
 Principal moments of inertia (kg/m2) [2]
 
