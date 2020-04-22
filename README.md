@@ -1,4 +1,4 @@
-# NavTOP
+# NavTOP ver. 1.0
 ## Orbit propagation code
 
 NavTOP is an Earth-bound orbit determination code developed for research purposes within the Navigation Laboratory at the Illinois Institute of Technology. This program is developed using MATLAB, and relies heavily on Object-Oriented Programming. 
@@ -43,7 +43,7 @@ The lines above "Case name" give a description of the case studied, the file's r
   
   Spacecraft's initial conditions:
   
-  - Initial parameters: "Orbital elements" (initial radius and velocity can not be chosen as entry parameter yet)
+  - Initial parameters: "Orbital elements" (initial radius and velocity can not be chosen as entry parameters yet)
   
   - Inclination (deg),
   - Longitude of ascending node (deg),                            
