@@ -43,7 +43,7 @@ The lines above "Case name" give a description of the case studied, the file's r
   
   Spacecraft's initial conditions:
   
-  - Initial parameters: "Orbital elements" (initial radius and velocity can not be chosen as entry parameters yet)
+  - Initial parameters: "Orbital elements" (initial radius and velocity cannot be chosen as entry parameters yet)
   
   - Inclination (deg),
   - Longitude of ascending node (deg),                            
