@@ -1,0 +1,60 @@
+GPS PRN1 INPUT FILE
+
+Status : work in progress
+
+Sources : [1] https://gssc.esa.int/navipedia/index.php/GPS_Space_Segment#cite_note-6
+          [2] http://hpiers.obspm.fr/eop-pc/index.php?index=matrice&lang=en on 1 Jan. 00:00:00.000 UTCG
+          [3] STK results on 1 Jan. 00:00:00.000 UTCG
+          [4] NGA database nga20342.eph
+
+Case name                                                     gpsPRN1
+
+SPACECRAFT PROPERTIES [1]
+————————————————————————————————————————————————————————————————————————————————
+
+Main gravitating body                                         earth
+
+Spacecraft mass (kg)                                          1705
+
+Spacecraft reflective area (m2)                               85.2
+
+Spacecraft reflective coefficient                             1
+
+
+INITIAL CONDITIONS
+————————————————————————————————————————————————————————————————————————————————
+
+Main body's initial orientation [2]
+
+Right ascension (deg)                                         89.1370716309948
+Declination (deg)                                             0.104033112862453
+Sidereal time (deg)                                           10.9798680695267
+
+Main body's initial orbital elements [3]
+
+Main body's orbital inclination (deg)            							23.436
+Main body's longitude of ascending node (deg)  								0.002
+Main body's argument of periapsis (deg)      									101.802
+Main body's true anomaly (deg)                                358.198
+Main body's semi-major axis (m)                								149667275269.996
+Main body's eccentricity                 							        0.017153
+
+Spacecraft's initial conditions [4]
+
+Initial parameters                                            Orbital elements
+
+Inclination (deg)                                             55.9195729062151
+Longitude of ascending node (deg)                             78.2256588406894
+Argument of periapsis (deg)                                   39.9246291224827
+True anomaly (deg)                                            246.208358537565
+Semi-major axis (m)                                           26558603.8783692
+Eccentricity                                                  0.00825141871343863
+
+
+PROPAGATION PARAMETERS
+————————————————————————————————————————————————————————————————————————————————
+
+Potential maximum degree                                      22
+
+Time step (sec)                                               60
+Final time increment (sec)                                    43200

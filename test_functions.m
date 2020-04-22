@@ -2,6 +2,97 @@ classdef test_functions
     
     methods(Static)
         
+        % PLOT ECCENTRIC ANOMALY EVOLUTION WITH THE MEAN ANOMALY
+        % PLOT TRUE ANOMALY EVOLUTION WITH THE ECCENTRIC ANOMALY
+        %
+        % Inputs :
+        %   ecc_start (scalar, unitless) - start eccentricity value
+        %
+        %   ecc_stop (scalar, unitless) - last eccentricity value
+        %
+        %   nb_ecc (integer, unitless) - number of eccentricity values
+        %
+        %   nb_M (integer, unitless) - number of mean anomaly values
+        %
+        % Outputs :
+        %   Ms (vector of size nb_M) - contains the mean anomaly values
+        %
+        %   eccs (vector of size nb_ecc) - contains the eccentricity values
+        %
+        %   resTabE (nb_M by nb_ecc matrix) - contains eccentric anomaly values
+        %       depending on the mean anomaly (along lines) and eccentricity 
+        %       (along columns)  
+        function [Ms, eccs, resTabE, resTabNu] = PlotAnoms ...
+                (ecc_start, ecc_stop, nb_ecc, nb_M)
+            
+            % Initial values 
+            ecc = ecc_start;
+            M = 0;
+            
+            M_step = 2*pi/(nb_M-1);
+            ecc_step = (ecc_stop - ecc_start)/(nb_ecc-1);
+            
+            % M, ecc values and results arrays
+            Ms = zeros(nb_M, 1);
+            eccs = zeros(nb_ecc, 1);
+            resTabE = zeros(nb_M, nb_ecc);
+            resTabNu = zeros(nb_M, nb_ecc);
+            
+            % Main loop
+            for j = 1:nb_ecc
+                
+                eccs(j, 1) = ecc; 
+                
+                for i = 1:nb_M
+                    
+                    Ms(i, 1) = M;
+                    resTabE(i, j) = spacecraft.Mean2EccAnom(M, ecc);
+                    resTabNu(i, j) = spacecraft.Ecc2TrueAnom(resTabE(i, j), ecc);
+                    M = M + M_step;
+                    
+                end
+                
+                M = 0;
+                ecc = ecc + ecc_step;
+                
+            end  
+            
+            % Plotting loop for E
+            figure;
+            for j = 1:nb_ecc
+                
+                hold on;
+                plot(Ms, resTabE(:, j));
+                
+            end 
+            
+            grid on
+            set(gca,'FontSize', 12)
+            title('Eccentric anomaly evolution with mean anomaly', ...
+                'FontSize', 14);
+            xlabel('Mean anomaly (rad)', 'FontSize', 14);
+            ylabel('Eccentric anomaly (rad)', 'FontSize', 14);
+            
+            % Plotting loop for nu
+            figure;
+            for j = 1:nb_ecc
+                
+                hold on;
+                plot(resTabE(:, j), resTabNu(:, j));
+                
+            end 
+            
+            grid on
+            set(gca,'FontSize', 12)
+            title('True anomaly evolution with eccentric anomaly', ...
+                'FontSize', 14);
+            xlabel('Eccentric anomaly (rad)', 'FontSize', 14);
+            ylabel('True anomaly (rad)', 'FontSize', 14);
+            legend('e = 0', 'e = 0.2475', 'e = 0.4950', 'e = 0.7425', 'e = 0.99');
+            
+        end
+        
+        
         % PLOT MAIN BODY'S UMBRA CONE LOCATION AT A GIVEN POSITION IN INERTIAL FRAME
         %
         % Can be used as :

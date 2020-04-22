@@ -40,7 +40,9 @@ Main body's true anomaly (deg)                                275.246
 Main body's semi-major axis (m)                								149469579521.940
 Main body's eccentricity                 							        0.016556
 
-Spacecraft's initial orbital elements [2]
+Spacecraft's initial conditions [2]
+
+Initial parameters                                            Orbital elements
 
 Inclination (deg)                                             63.4
 Longitude of ascending node (deg)                             50

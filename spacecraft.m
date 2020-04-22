@@ -7,8 +7,10 @@ classdef spacecraft
         
         mass;               % (scalar, kilograms), spacecraft's mass
         radius;             % (3 by 1 vector, meters), inertial planet-centric radius
-        r_2sun;             % (3 by 1 vector, meters), vector from s/c to Sun in inertial frame
         velocity;           % (3 by 1 vector, meters/second), inertial velocity
+        radBF;              % (3 by 1 vector, meters), radius vector in body-fixed frame
+        velBF;              % (3 by 1 vector, meters/second), velocity vector in body-fixed frame
+        r_2sun;             % (3 by 1 vector, meters), vector from s/c to Sun in inertial frame
         reflarea;           % (scalar, meters squared), reflective area
         reflcoeff;          % (scalar, unitless), reflective coefficient
         
@@ -65,12 +67,15 @@ classdef spacecraft
                 sc.orb_elems = varargin{5};
                 
                 sc.gamma = spacecraft.setGammaFromOrbElems ...
-                    (sc.orb_elems(4), sc.orb_elems(5));
+                    (sc.orb_elems(4), sc.orb_elems(6));
                 
                 sc.radius = spacecraft.setR(sc.orb_elems);
                 
                 sc.velocity = spacecraft.setV ... 
                     (sc.mb.mu, sc.radius, sc.gamma, sc.orb_elems);
+                
+                sc.radBF = sc.mb.BF2I'*sc.radius;
+                sc.velBF = sc.mb.BF2I'*sc.velocity;
                 
                 sc.h = cross(sc.radius, sc.velocity);
                                 
@@ -84,6 +89,8 @@ classdef spacecraft
                 sc.velocity = varargin{6};
                 sc.orb_elems = spacecraft.compute_orb_elems ...
                     (sc.mb.mu, sc.radius, sc.velocity);
+                sc.radBF = sc.mb.BF2I'*sc.radius;
+                sc.velBF = sc.mb.BF2I'*sc.velocity;
                 
             end 
             
@@ -261,10 +268,111 @@ classdef spacecraft
         %   gam (scalar, radians) - spacecraft's flight path angle
         function gam = setGammaFromOrbElems(nu, ecc)
             
-            gam = atan((ecc*sin(nu))/(1 + ecc*cos(nu)));
+            gam = atan2((ecc*sin(nu)), (1 + ecc*cos(nu)));
+            
+        end
+        
+        
+        % COMPUTE ECCENTRIC ANOMALY FROM MEAN ANOMALY
+        %
+        % Inputs :
+        %   M (scalar, radians) - spacecraft's mean anomaly
+        %
+        %   ecc (scalar, unitless) - spacecraft orbit's eccentricity
+        %
+        % Outputs :
+        %   E (scalar, radians) - spacecraft's eccentric anomaly
+        %
+        % Comments :
+        %   The eccentric anomaly is computed using the Newton-Raphson 
+        %   root-finding method. This works as long as the root is far 
+        %   from a potential stationary point on the function. 
+        %   In this specific case, the function can be written as 
+        %   
+        %       f(E) = E - ecc*sin(E) - M,
+        %
+        %   which implies
+        %   
+        %       f'(E) = 1 - ecc*cos(E).
+        %
+        %   As long as ecc is inferior to 1, f'(E) can not reach 0, and the
+        %   Newton-Raphson method can be used flawlessly. However, if
+        %   ecc >= 1, f'(E) can have potential roots, and the method may 
+        %   fail. This is not likely to lead to a division by 0 (because of
+        %   the round-off errors), but the method may converge to an incorrect
+        %   value. Moreover, the concept of mean anomaly can not be used
+        %   for parabolic or hyperbolic orbits, since it refers to an angle
+        %   computed from a fictitious circular orbit having the same period
+        %   as the actual one. Therefore, the use of an eccentricity higher
+        %   or equal to 1 is prevented. 
+        function E = Mean2EccAnom(M, ecc)
+            
+            % Controls if the eccentricity is superior or equal to 1
+            if ecc >= 1
+                error('Eccentricity must remain below 1')
+            end 
+            
+            % Convergence and number of iterations tolerance for Newton-
+            % Raphson method 
+            threshold = 10^(-6);
+            it_max = 1000000;
+            
+            % Initial guess 
+            E_i = pi;
+            
+            % First iteration of Newton-Raphson method
+            count = 1;
+            E = E_i - (E_i - ecc*sin(E_i) - M)/(1 - ecc*cos(E_i));
+            
+            % Main loop
+            while (abs(E - E_i) >= threshold)
+                
+                % No convergence 
+                if count == it_max
+                    warning('on', 'backtrace');
+                    warning ...
+                    ('Newton-Raphson did not converge to eccentric anomaly value');
+                    return;
+                end
+                
+                count = count + 1;
+                E_i = E;
+                
+                % Compute next value
+                E = E_i - (E_i - ecc*sin(E_i) - M)/(1 - ecc*cos(E_i));
+                
+            end  
             
         end 
         
+        
+        % COMPUTE TRUE ANOMALY FROM ECCENTRIC ANOMALY
+        %
+        % Inputs :
+        %   E (scalar, radians) - spacecraft's eccentric anomaly
+        %
+        %   ecc (scalar, unitless) - spacecraft orbit's eccentricity
+        %
+        % Outputs :
+        %   nu (scalar, radians) - spacecraft's true anomaly
+        function nu = Ecc2TrueAnom(E, ecc)
+            
+            % Test if E < pi (spacecraft is before apogee)
+            if E < pi
+                
+                % Then tan(E/2) > 0 and nu is given in the correct quadrant 
+                % by the expression used 
+                nu = 2*atan(sqrt((1+ecc)/(1-ecc))*tan(E/2));
+            
+            else 
+                
+                % Here, tan(E/2) < 0 and the expression above gives nu < 0. 
+                % Shifting by 2*pi
+                nu = 2*pi + 2*atan(sqrt((1+ecc)/(1-ecc))*tan(E/2));
+                
+            end
+            
+        end 
         
         
         % COMPUTE RADIUS VECTOR FROM SPACECRAFT TO SUN IN INERTIAL FRAME
@@ -442,25 +550,25 @@ classdef spacecraft
         %                   properties at each instant during propagation. 
         %                   Each row corresponds to a particular instant :
         %                   tab(:, 1) -> time increment
-        %                   tab(:, 2) -> planet-centric radius
-        %                   tab(:, 3) -> latitude
-        %                   tab(:, 4) -> longitude
-        %                   tab(:, 5) -> main body's right ascension
-        %                   tab(:, 6) -> main body's declination
-        %                   tab(:, 7) -> main body's sidereal time
-        %                   tab(:, 8:10) -> gravitational perturbation
-        %                   tab(:, 11:13) -> sol. rad. pressure 
-        %                   tab(:, 14:16) -> third body gravity
-        %                   tab(:, 17) -> inside/outside umbra index
-        %                   tab(:, 18:23) -> orbital elements
-        %                   tab(:, 24) -> RK4 computation error on orb. elems
+        %                   tab(:, 2:4) -> cartesian coordinates (ECI)
+        %                   tab(:, 5:7) -> cartesian velocity (ECI)
+        %                   tab(:, 8) -> planet-centric radius
+        %                   tab(:, 9) -> latitude
+        %                   tab(:, 10) -> longitude
+        %                   tab(:, 11) -> main body's right ascension
+        %                   tab(:, 12) -> main body's declination
+        %                   tab(:, 13) -> main body's sidereal time
+        %                   tab(:, 14:16) -> gravitational perturbation
+        %                   tab(:, 17:19) -> sol. rad. pressure 
+        %                   tab(:, 20:22) -> third body gravity
+        %                   tab(:, 23) -> inside/outside umbra index
+        %                   tab(:, 24:29) -> orbital elements
+        %                   tab(:, 30) -> RK4 computation error on orb. elems
         function [sc, tab] = propagate_orbit_orb_elems_RK4 ...
                 (sc, ti, tf, dt, raw_coeff, max_deg) 
             
             harmonic_coeff = force_functions.read_harm_coeff_from_file ...
                 (raw_coeff, max_deg);
-            
-            radsc = sc.radius;
                 
             OrbElemsSC = sc.orb_elems;
 
@@ -506,7 +614,7 @@ classdef spacecraft
             
             % initializing result table
             N = ((tf - ti)/dt) + 1;
-            tab = zeros(N, 24);
+            tab = zeros(N, 36);
                
             % propagating orbit for each time increment until tf is reached 
             for j = 1:N
@@ -515,10 +623,18 @@ classdef spacecraft
                 sph_coord = rotation_functions.LocalToPlanetaryCoord ...
                     (rasc, dec, stime, e, a, O, i, o, n);
                 
+                % computing spacecraft location in body-fixed frame
+                sc.radBF = sc.mb.BF2I'*sc.radius;
+                
+                % spacecraft velocity w.r.t body-fixed frame, expressed in
+                % body fixed frame as well
+                ECI_vel_BF = sc.velocity - cross(sc.mb.RotVecIn, sc.radius);
+                sc.velBF = sc.mb.BF2I'*ECI_vel_BF; 
+                
                 % saving data in array
-                tab(j, :) = [t, sph_coord', rasc, dec, stime, ...
-                    Fg', Fsrp', Ftb', ...
-                    sc.IsInUmbra, OrbElemsSC', err];
+                tab(j, :) = [t, sc.radius', sc.velocity', sc.radBF', ...
+                    sc.velBF', sph_coord', rasc, dec, stime, Fg', Fsrp', ...
+                    Ftb', sc.IsInUmbra, OrbElemsSC', err];
                 
                 % solve variational equations using RK4 method                                 
                 [sc.orb_elems, Fg, Fsrp, Ftb] = ...
@@ -533,20 +649,20 @@ classdef spacecraft
                 
                 % update remaining orbital parameters
                 sc.gamma = spacecraft.setGammaFromOrbElems ...
-                    (sc.orb_elems(4), sc.orb_elems(5));
+                    (sc.orb_elems(4), sc.orb_elems(6));
                 
                 sc.radius = spacecraft.setR(sc.orb_elems);
                 
                 sc.velocity = spacecraft.setV ...
                     (sc.mb.mu, sc.radius, sc.gamma, sc.orb_elems);
                 
-                sc.h = cross(radsc, sc.velocity);
+                sc.h = cross(sc.radius, sc.velocity);
                 
                 sc.r_2sun = spacecraft.vec_sc2sun(OrbElemsSC, OrbElemsMB);
                 
                 % update spacecraft position w.r.t. umbra 
                 sc.IsInUmbra = spacecraft.InUmbra ...
-                    (radsc, OrbElemsMB, SCONE2I, hCone, ConeApert);
+                    (sc.radius, OrbElemsMB, SCONE2I, hCone, ConeApert);
                 
                 % update main body's orientation
                 sc.mb = main_body.update_angles(sc.mb, dt);
@@ -554,9 +670,7 @@ classdef spacecraft
                 % update time increment
                 t = t + dt;
                 
-                % collecting new parameters
-                radsc = sc.radius;
-                
+                % collecting new parameters                
                 OrbElemsSC = sc.orb_elems;
             
                 i = OrbElemsSC(1);

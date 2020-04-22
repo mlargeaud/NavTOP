@@ -1,0 +1,58 @@
+GPS Block IIR 02 INPUT FILE
+
+Status : work in progress
+
+Sources : [1] STK results on 23 Jul 1997 05:38:07.440 UTCG 
+          [2] https://www.celestrak.com/NORAD/archives/
+
+Case name                                                     gpsBIIR-02
+
+SPACECRAFT PROPERTIES
+————————————————————————————————————————————————————————————————————————————————
+
+Main gravitating body                                         earth
+
+Spacecraft mass (kg)                                          83.6
+
+Spacecraft reflective area (m2)                               0.528415884333803
+
+Spacecraft reflective coefficient                             1.7
+
+
+INITIAL CONDITIONS
+————————————————————————————————————————————————————————————————————————————————
+
+Main body's initial orientation [1]
+
+Right ascension (deg)                                         -170.069
+Declination (deg)                                             0.014
+Sidereal time (deg)                                           -164.365
+
+Main body's initial orbital elements [1]
+
+Main body's orbital inclination (deg)            							23.441
+Main body's longitude of ascending node (deg)  								359.995
+Main body's argument of periapsis (deg)      									104.384
+Main body's true anomaly (deg)                                196.074
+Main body's semi-major axis (m)                								149497361245.610
+Main body's eccentricity                 							        0.017271
+
+Spacecraft's initial conditions [2]
+
+Initial parameters                                            Orbital elements
+
+Inclination (deg)                                             39.1877
+Longitude of ascending node (deg)                             145.9515
+Argument of periapsis (deg)                                   194.4140
+True anomaly (deg)                                            150.2719362340328
+Semi-major axis (m)                                           16659194.92148485
+Eccentricity                                                  0.6057595
+
+
+PROPAGATION PARAMETERS
+————————————————————————————————————————————————————————————————————————————————
+
+Potential maximum degree                                      22
+
+Time step (sec)                                               67
+Final time increment (sec)                                    87904
